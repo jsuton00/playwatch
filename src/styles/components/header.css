@@ -1,0 +1,51 @@
+.header {
+	border: 0.0625rem solid #202020;
+	background-color: #202020;
+	width: 100%;
+	min-height: 3.5rem;
+	height: 3.5rem;
+	max-height: 3.5rem;
+}
+
+.nav-header {
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0.25rem 0.5rem;
+}
+
+.nav-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0.25rem 0.5rem;
+}
+
+.brand-item {
+	flex-basis: 28%;
+	width: 100%;
+	height: 100%;
+}
+
+.brand-name {
+	width: 100%;
+	font-size: 1.5rem;
+	font-weight: 500;
+	padding: 0.125rem 0.5rem;
+	color: #ffffff;
+}
+
+.brand-logo {
+	padding: 0.25rem;
+	margin-right: 0.5rem;
+	color: #df0712;
+	font-size: 1.5rem;
+}
+
+.form-item {
+	flex-basis: 45%;
+	width: 100%;
+	height: 100%;
+}
