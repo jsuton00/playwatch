@@ -4,7 +4,7 @@ import React from 'react';
 import VideoThumbNail from './VideoThumbNail';
 
 export default function VideoItem(props) {
-	const { videoId, videos, selectVideo, playVideo } = props;
+	const { videoId, videos, selectVideo, playVideo, getVideoDetails } = props;
 
 	const handleSelectVideo = (e) => {
 		return selectVideo(e.target.id);
@@ -15,6 +15,7 @@ export default function VideoItem(props) {
 		if (videoId) {
 			selectVideo(videoId);
 			playVideo(videoId);
+			getVideoDetails(videoId);
 		}
 	};
 	return (

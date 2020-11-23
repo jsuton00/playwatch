@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { playYoutubeVideo, searchVideos } from './apis/api';
+import { fetchVideoDetails, playYoutubeVideo, searchVideos } from './apis/api';
 import Header from './components/Header';
 import VideoDetails from './components/VideoDetails';
 import VideoList from './components/VideoList';
@@ -10,10 +10,13 @@ class App extends Component {
 		videoList: '',
 		searchTerm: '',
 		videoId: '',
+		playedVideoDetails: '',
 		videoUrl: '',
 		loadingVideoList: false,
+		loadingVideoDetails: false,
 		errorSearchingVideos: false,
 		errorPlayingVideo: false,
+		errorFetchingVideoDetails: false,
 	};
 
 	fetchVideoList = async (searchTerm) => {
@@ -37,6 +40,31 @@ class App extends Component {
 				errorSearchingVideos: false,
 			});
 			console.log('Error', err);
+		}
+	};
+
+	fetchPlayedVideoDetails = async (videoId) => {
+		try {
+			this.setState({ loadingVideoDetails: true });
+			let request;
+			let playedVideoDetails;
+
+			if (videoId) {
+				request = await fetchVideoDetails(videoId);
+				playedVideoDetails = await request.data.items;
+
+				this.setState({
+					loadingVideoDetails: false,
+					errorFetchingVideoDetails: false,
+					playedVideoDetails: playedVideoDetails[0],
+				});
+			}
+		} catch (err) {
+			console.log('Error', err);
+			this.setState({
+				loadingVideoDetails: false,
+				errorFetchingVideoDetails: true,
+			});
 		}
 	};
 
@@ -72,6 +100,7 @@ class App extends Component {
 
 			if (this.state.videoId) {
 				this.playVideo(this.state.videoId);
+				this.fetchPlayedVideoDetails(this.state.videoId);
 			}
 		});
 	}
@@ -91,7 +120,10 @@ class App extends Component {
 					<div className="video-container container-fluid">
 						<div className="video-container-row row">
 							<div className="video-container-col video-display ">
-								<VideoDetails selectedVideo={this.state.videoUrl} />
+								<VideoDetails
+									selectedVideo={this.state.videoUrl}
+									selectedVideoDetails={this.state.playedVideoDetails}
+								/>
 							</div>
 							<div className="video-container-col video-list">
 								{this.state.videoList && (
@@ -99,6 +131,7 @@ class App extends Component {
 										videoList={this.state.videoList}
 										setVideoId={this.setVideoId}
 										playVideo={this.playVideo}
+										getVideoDetails={this.fetchPlayedVideoDetails}
 									/>
 								)}
 							</div>

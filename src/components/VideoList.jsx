@@ -3,7 +3,7 @@ import VideoItem from './VideoItem';
 import '../styles/components/videoList.css';
 
 export default function VideoList(props) {
-	const { videoList, setVideoId, playVideo } = props;
+	const { videoList, setVideoId, playVideo, getVideoDetails } = props;
 	console.log(videoList);
 	return (
 		<div id="video-results-list" className="video-results-list list-group">
@@ -17,6 +17,7 @@ export default function VideoList(props) {
 							thumbnails={videos.snippet.thumbnails}
 							selectVideo={() => setVideoId(videos.id.videoId)}
 							playVideo={() => playVideo(videos.id.videoId)}
+							getVideoDetails={() => getVideoDetails(videos.id.videoId)}
 						/>
 					);
 				})}
